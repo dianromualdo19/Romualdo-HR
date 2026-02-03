@@ -1,596 +1,373 @@
-Exploring the workspace to understand the project structure.
-
-
-[2 tools called]
-
-
-Checking the existing files to understand the current setup:
-
-
-[3 tools called]
-
-
-Creating a modern landing page for the HR solution. Replace the current `index.html` with this:
-
-```html:public/index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Romualdo HR - Modern HR Solutions for Your Business</title>
+    <title>Romualdo HR - Modern Solutions</title>
     <style>
+        :root {
+            --bg-black: #000000;
+            --card-bg: #111111;
+            --accent-lime: #DEFE01;
+            --text-gray: #a1a1a1;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #6366f1, #a855f7);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-black);
+            color: var(--white);
             line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
         }
 
-        /* Navigation */
         nav {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background:#293346;
+            backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #2563eb;
+        }
+
+        .logo-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--accent-lime);
+            border-radius: 50%;
+            display: inline-block;
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
+            color: var(--white);
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: 0.3s;
         }
 
-        .nav-links a:hover {
-            color: #2563eb;
-        }
+        .nav-links a:hover { opacity: 1; color: var(--accent-lime); }
 
-        .cta-button {
-            background: #2563eb;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+        .btn-get-started {
+            border: 1px solid #DEFE01;
+            color: #DEFE01;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: bold;
             text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .cta-button:hover {
-            background: #1d4ed8;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 150px 2rem 100px;
-            text-align: center;
-            margin-top: 70px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 180px 5% 100px;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            line-height: 1.2;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            max-width: 700px;
         }
 
         .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
         }
 
-        .hero-buttons {
+        .hero-btns {
             display: flex;
             gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
-        .btn-primary {
+        .btn-white {
             background: white;
-            color: #667eea;
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            color: black;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            padding: 1rem 2rem;
-            border: 2px solid white;
-            border-radius: 8px;
+        .btn-outline {
+            border: 1px solid var(--accent-lime);
+            color: var(--accent-lime);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: background 0.3s, color 0.3s;
         }
 
-        .btn-secondary:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 2rem;
-            background: #f8fafc;
-        }
-
-        .container {
-            max-width: 1200px;
+        /* Content Sections */
+        .main-container {
+            padding: 0 5%;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-title {
-            text-align: center;
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 100px;
+        }
+
+        .section-header {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
+            margin-bottom: 2rem;
         }
 
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #64748b;
-            margin-bottom: 4rem;
-        }
-
+        /* Features Grid */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #1e293b;
-        }
-
-        .feature-card p {
-            color: #64748b;
-            line-height: 1.8;
-        }
-
-        /* Benefits Section */
-        .benefits {
-            padding: 80px 2rem;
-            background: white;
-        }
-
-        .benefits-content {
-            display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-top: 3rem;
+            gap: 1.5rem;
         }
 
-        .benefits-list {
-            list-style: none;
+        .card {
+            background:#293346;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #222;
+            position: relative;
         }
 
-        .benefits-list li {
-            padding: 1rem 0;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .card h3 { margin-bottom: 1rem; }
+        .card p { color: var(--text-gray); font-size: 0.9rem; }
 
-        .check-icon {
-            width: 24px;
-            height: 24px;
-            background: #10b981;
+        .check-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-lime);
+            color: black;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            flex-shrink: 0;
+            font-size: 12px;
         }
 
-        .benefits-image {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            height: 400px;
+        /* Benefits List */
+        .benefit-item {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+
+        .icon-check {
+            background: var(--accent-lime);
+            color: black;
+            border-radius: 50%;
+            padding: 4px;
+            font-size: 0.8rem;
         }
 
         /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 2rem;
-        }
-
-        .stats-grid {
+        .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background:#293346;
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
         }
 
-        .stat-item h3 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
+        .stat-card h4 { font-size: 2rem; margin-bottom: 0.2rem; }
+        .stat-card p { color: var(--text-gray); font-size: 0.8rem; }
 
-        .stat-item p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 2rem;
-            background: #1e293b;
-            color: white;
+        /* Preview Box */
+        .preview-box {
+            grid-row: span 2;
+            background: #293346;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
             text-align: center;
         }
 
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .u{
+            color:#DEFE01;
         }
-
-        .cta-section p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* Footer */
+        
         footer {
-            background: #0f172a;
-            color: white;
-            padding: 3rem 2rem 1rem;
+            border-top: 1px solid #222;
+            padding: 4rem 5% 2rem;
+            margin-top: 100px;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
-            margin-bottom: 2rem;
         }
 
-        .footer-section h4 {
-            margin-bottom: 1rem;
-            color: #2563eb;
-        }
+        .footer-col h5 { color: #6366f1; margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: var(--text-gray); text-decoration: none; font-size: 0.9rem; }
 
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            color: #94a3b8;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .benefits-content {
-                grid-template-columns: 1fr;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 900px) {
+            .grid-layout, .stats-container, .footer-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav>
-        <div class="nav-container">
-            <div class="logo">Romualdo HR</div>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#benefits">Benefits</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <a href="#contact" class="cta-button">Get Started</a>
+        <div class="logo">
+            <span class="logo-dot"></span>
+            Romualdo-HR
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="login.html" class="btn-get-started">Get Started</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Transform Your HR Management</h1>
-            <p>Streamline your human resources operations with our comprehensive HR solution. Manage employees, payroll, and more with ease.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn-primary">Start Free Trial</a>
-                <a href="#features" class="btn-secondary">Learn More</a>
+    <main class="main-container">
+        
+        <section class="hero">
+            <h1 class="u">Empowering people, not just processing them</h1>
+            <p>Empower your workforce and accelerate growth with a unified HR ecosystem built for high-performance teams. Our intelligent platform eliminates complexity, allowing you to scale your business effortlessly while staying focused on rapid expansion and people-first leadership.</p>
+            <div class="hero-btns">
+                <a href="login.html" class="btn-white">Start</a>
+                <a href="#" class="btn-outline">Learn More</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Powerful Features</h2>
-            <p class="section-subtitle">Everything you need to manage your workforce efficiently</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👥</div>
-                    <h3>Employee Management</h3>
-                    <p>Comprehensive employee database with easy-to-use interface. Track employee information, roles, and performance all in one place.</p>
+        <div class="grid-layout">
+            <div>
+                <h2 id="benefits" class="section-header">Benefits</h2>
+                <div class="benefit-item">
+                    <span class="icon-check">✓</span>
+                    <div>
+                        <h4>Reduce workload</h4>
+                        <p>Automate administrative tasks by up to 70%.</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Payroll Processing</h3>
-                    <p>Automated payroll management system that calculates salaries, deductions, and generates payslips effortlessly.</p>
+                <div class="benefit-item">
+                    <span class="icon-check">✓</span>
+                    <div>
+                        <h4>Enhance satisfaction</h4>
+                        <p>Improve employee engagement and retention.</p>
+                    </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Analytics & Reports</h3>
-                    <p>Get insights into your workforce with detailed analytics and customizable reports to make data-driven decisions.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⏰</div>
-                    <h3>Time Tracking</h3>
-                    <p>Monitor attendance, track working hours, and manage leave requests with our integrated time tracking system.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
-                    <h3>Secure & Compliant</h3>
-                    <p>Enterprise-grade security with compliance features to protect sensitive employee data and meet regulatory requirements.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Mobile Friendly</h3>
-                    <p>Access your HR system from anywhere with our responsive design that works seamlessly on all devices.</p>
+                <div class="benefit-item">
+                    <span class="icon-check">✓</span>
+                    <div>
+                        <h4>Scale Effortlessly</h4>
+                        <p>Grows seamlessly with your business needs.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <h2 class="section-title">Why Choose Romualdo HR?</h2>
-            <p class="section-subtitle">Experience the difference with our modern HR solution</p>
-            <div class="benefits-content">
-                <div>
-                    <ul class="benefits-list">
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>Reduce administrative workload by up to 70%</span>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>Improve accuracy in payroll processing</span>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>Enhance employee satisfaction and engagement</span>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>Make informed decisions with real-time data</span>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>Scale effortlessly as your business grows</span>
-                        </li>
-                        <li>
-                            <div class="check-icon">✓</div>
-                            <span>24/7 support from our expert team</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="benefits-image">
-                    <div>📈 HR Dashboard Preview</div>
+            <div>
+                <h2 class="section-header">Features</h2>
+                <div class="features-grid">
+                    <div class="card">
+                        <span class="check-badge">✓</span>
+                        <h3>Employee Management</h3>
+                        <p>Centralized database for all your team information and performance tracking.</p>
+                    </div>
+                    <div class="card">
+                        <span class="check-badge">✓</span>
+                        <h3>Payroll</h3>
+                        <p>Automated calculations and compliant reporting made simple.</p>
+                    </div>
+                    <div class="card">
+                        <span class="check-badge">✓</span>
+                        <h3>Analytics</h3>
+                        <p>Real-time insights into workforce trends and data-driven decisions.</p>
+                    </div>
+                    <div class="card">
+                        <span class="check-badge">✓</span>
+                        <h3>Time Tracking</h3>
+                        <p>Effortless attendance and leave management integrated directly.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>10K+</h3>
-                    <p>Active Users</p>
-                </div>
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Companies Trust Us</p>
-                </div>
-                <div class="stat-item">
-                    <h3>99.9%</h3>
-                    <p>Uptime Guarantee</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Customer Support</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="contact">
-        <div class="container">
-            <h2>Ready to Transform Your HR Management?</h2>
-            <p>Join thousands of companies already using Romualdo HR to streamline their operations.</p>
-            <a href="#contact" class="btn-primary" style="display: inline-block; margin-top: 1rem;">Get Started Today</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Romualdo HR</h4>
-                <p>Modern HR solutions for modern businesses. Streamline your workforce management with our comprehensive platform.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 1rem;"><span class="logo-dot"></span> Romualdo HR</div>
+                <p style="color: var(--text-gray); font-size: 0.8rem;">Modern HR solutions for modern businesses.</p>
             </div>
-            <div class="footer-section">
-                <h4>Product</h4>
+            <div class="footer-col">
+                <h5>Product</h5>
                 <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#">Features</a></li>
                     <li><a href="#">Pricing</a></li>
                     <li><a href="#">Updates</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h4>Company</h4>
+            <div class="footer-col">
+                <h5>Company</h5>
                 <ul>
-                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#">About Us</a></li>
                     <li><a href="#">Careers</a></li>
                     <li><a href="#">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-section">
-                <h4>Support</h4>
+            <div class="footer-col">
+                <h5>Support</h5>
                 <ul>
                     <li><a href="#">Help Center</a></li>
                     <li><a href="#">Documentation</a></li>
                     <li><a href="#">API Reference</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Romualdo HR. All rights reserved.</p>
+        <div style="text-align: center; margin-top: 4rem; color: #444; font-size: 0.8rem;">
+            &copy; 2026 Romualdo HR. All rights reserved.
         </div>
     </footer>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add scroll effect to navbar
-        window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
-            } else {
-                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            }
-        });
-    </script>
 </body>
 </html>

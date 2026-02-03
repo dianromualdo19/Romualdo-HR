@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Romualdo HR</title>
+    <style>
+        :root {
+            --bg-black: #000000;
+            --card-bg: #111111;
+            --accent-lime: #DEFE01;
+            --text-gray: #a1a1a1;
+            --white: #ffffff;
+            --danger: #ff4b4b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #050505;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .brand-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: var(--accent-lime);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .badge-admin {
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            border: 1px solid var(--accent-lime);
+            color: var(--accent-lime);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .btn-logout:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        main {
+            padding: 2rem 3rem 3rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        aside {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid #222;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .aside-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            margin-bottom: 1.2rem;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .metric-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            background: #050505;
+            border: 1px solid #333;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid #222;
+            padding: 1.5rem 1.75rem;
+        }
+
+        .card + .card {
+            margin-top: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .pill {
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            border: 1px solid #333;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        form#employeeForm {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        label {
+            color: var(--text-gray);
+        }
+
+        input, select {
+            background: #050505;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 0.65rem 0.75rem;
+            color: var(--white);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-lime);
+            box-shadow: 0 0 0 1px rgba(222, 254, 1, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--accent-lime);
+            border: none;
+            color: #000;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .btn-danger {
+            color: var(--danger);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        thead {
+            background: #050505;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.6rem 0.4rem;
+            border-bottom: 1px solid #222;
+        }
+
+        th {
+            font-weight: 500;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+        }
+
+        tbody tr:hover {
+            background: #080808;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .status-inactive {
+            background: rgba(148, 163, 184, 0.15);
+            color: #cbd5f5;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #111111;
+            color: var(--white);
+            padding: 0.75rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid #333;
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 20;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #errorBanner {
+            background: rgba(255, 75, 75, 0.12);
+            border: 1px solid rgba(255, 75, 75, 0.5);
+            color: #fecaca;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            display: none;
+            margin-bottom: 0.75rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <span class="brand-dot"></span>
+            Romualdo HR
+        </div>
+        <div class="header-right">
+            <span id="adminEmail"></span>
+            <span class="badge-admin">Admin</span>
+            <button id="logoutBtn" class="btn-logout">Log out</button>
+        </div>
+    </header>
+
+    <main>
+        <aside>
+            <div class="aside-title">Overview</div>
+            <div class="metric">
+                <div class="metric-label">Total employees</div>
+                <div class="metric-value" id="totalEmployees">0</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Active</div>
+                <div class="metric-pill">
+                    <span id="activeEmployees">0</span>
+                    <span>active</span>
+                </div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Inactive</div>
+                <div class="metric-pill">
+                    <span id="inactiveEmployees">0</span>
+                    <span>inactive</span>
+                </div>
+            </div>
+        </aside>
+
+        <section>
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Employees</div>
+                        <div class="card-subtitle">Manage your employee records in real-time.</div>
+                    </div>
+                    <span class="pill" id="syncStatus">Live with Firebase</span>
+                </div>
+
+                <div id="errorBanner"></div>
+
+                <form id="employeeForm">
+                    <input type="hidden" id="employeeId">
+
+                    <div class="form-group">
+                        <label for="empName">Name</label>
+                        <input id="empName" type="text" placeholder="Jane Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empEmail">Email</label>
+                        <input id="empEmail" type="email" placeholder="jane.doe@company.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empRole">Role / Position</label>
+                        <input id="empRole" type="text" placeholder="HR Specialist" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empStatus">Status</label>
+                        <select id="empStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="align-items:flex-end;">
+                        <button type="submit" id="saveBtn" class="btn-primary">Add employee</button>
+                        <button type="button" id="cancelEditBtn" class="btn-ghost" style="display:none;">Cancel edit</button>
+                    </div>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th style="text-align:right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTbody">
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding:1rem; color:var(--text-gray);">
+                                No employees yet. Add your first employee above.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast"></div>
+
+    <script type="module">
+        import { auth, db } from "./firebase-init.js";
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+        import {
+            ref,
+            onValue,
+            push,
+            set,
+            update,
+            remove,
+            get
+        } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
+
+        const adminEmailEl = document.getElementById("adminEmail");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        const employeeForm = document.getElementById("employeeForm");
+        const employeeIdInput = document.getElementById("employeeId");
+        const empNameInput = document.getElementById("empName");
+        const empEmailInput = document.getElementById("empEmail");
+        const empRoleInput = document.getElementById("empRole");
+        const empStatusSelect = document.getElementById("empStatus");
+        const saveBtn = document.getElementById("saveBtn");
+        const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+        const employeeTbody = document.getElementById("employeeTbody");
+        const totalEmployeesEl = document.getElementById("totalEmployees");
+        const activeEmployeesEl = document.getElementById("activeEmployees");
+        const inactiveEmployeesEl = document.getElementById("inactiveEmployees");
+        const toastEl = document.getElementById("toast");
+        const errorBanner = document.getElementById("errorBanner");
+
+        function showToast(message) {
+            toastEl.textContent = message;
+            toastEl.classList.add("show");
+            setTimeout(() => toastEl.classList.remove("show"), 2500);
+        }
+
+        function showErrorBanner(message) {
+            errorBanner.textContent = message;
+            errorBanner.style.display = "block";
+        }
+
+        function hideErrorBanner() {
+            errorBanner.style.display = "none";
+        }
+
+        function resetForm() {
+            employeeIdInput.value = "";
+            empNameInput.value = "";
+            empEmailInput.value = "";
+            empRoleInput.value = "";
+            empStatusSelect.value = "active";
+            saveBtn.textContent = "Add employee";
+            cancelEditBtn.style.display = "none";
+        }
+
+        cancelEditBtn.addEventListener("click", () => {
+            resetForm();
+        });
+
+        logoutBtn.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                localStorage.clear();
+                window.location.replace("login.html");
+            }
+        });
+
+        // Route guard: only allow admins
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                localStorage.clear();
+                window.location.replace("login.html");
+                return;
+            }
+
+            adminEmailEl.textContent = user.email || "";
+
+            const localRole = localStorage.getItem("role");
+            const uid = user.uid;
+
+            try {
+                const adminFlagRef = ref(db, "admins/" + uid);
+                const snap = await get(adminFlagRef);
+                const isAdmin = snap.exists() && snap.val() === true;
+
+                if (!isAdmin || localRole !== "admin") {
+                    localStorage.setItem("role", "employee");
+                    window.location.replace("employee-dashboard.html");
+                    return;
+                }
+
+                // Only load employees when admin verified
+                initEmployeesListener();
+            } catch (err) {
+                console.error(err);
+                showErrorBanner("Unable to verify admin permissions. Try again later.");
+            }
+        });
+
+        // Realtime employees listener
+        function initEmployeesListener() {
+            const employeesRef = ref(db, "employees");
+
+            onValue(
+                employeesRef,
+                (snapshot) => {
+                    hideErrorBanner();
+
+                    const data = snapshot.val() || {};
+                    const entries = Object.entries(data);
+
+                    if (!entries.length) {
+                        employeeTbody.innerHTML = `
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:1rem; color:var(--text-gray);">
+                                    No employees yet. Add your first employee above.
+                                </td>
+                            </tr>
+                        `;
+                        totalEmployeesEl.textContent = "0";
+                        activeEmployeesEl.textContent = "0";
+                        inactiveEmployeesEl.textContent = "0";
+                        return;
+                    }
+
+                    let html = "";
+                    let total = 0;
+                    let active = 0;
+                    let inactive = 0;
+
+                    for (const [id, emp] of entries) {
+                        total++;
+                        if (emp.status === "active") active++;
+                        else inactive++;
+
+                        const safeName = emp.name || "";
+                        const safeEmail = emp.email || "";
+                        const safeRole = emp.role || "";
+                        const safeStatus = emp.status || "inactive";
+
+                        html += `
+                            <tr data-id="${id}">
+                                <td>${safeName}</td>
+                                <td>${safeEmail}</td>
+                                <td>${safeRole}</td>
+                                <td>
+                                    <span class="status-pill ${
+                                        safeStatus === "active"
+                                            ? "status-active"
+                                            : "status-inactive"
+                                    }">
+                                        ${safeStatus}
+                                    </span>
+                                </td>
+                                <td style="text-align:right;">
+                                    <button class="btn-ghost" data-action="edit">Edit</button>
+                                    <button class="btn-ghost btn-danger" data-action="delete">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    }
+
+                    employeeTbody.innerHTML = html;
+                    totalEmployeesEl.textContent = String(total);
+                    activeEmployeesEl.textContent = String(active);
+                    inactiveEmployeesEl.textContent = String(inactive);
+                },
+                (error) => {
+                    console.error(error);
+                    showErrorBanner("Lost connection to Firebase. Changes may not be saved.");
+                }
+            );
+        }
+
+        employeeForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            hideErrorBanner();
+
+            const id = employeeIdInput.value;
+            const name = empNameInput.value.trim();
+            const email = empEmailInput.value.trim();
+            const role = empRoleInput.value.trim();
+            const status = empStatusSelect.value;
+
+            if (!name || !email || !role) {
+                showErrorBanner("Please fill in all required fields.");
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = id ? "Saving..." : "Adding...";
+
+            try {
+                if (id) {
+                    const empRef = ref(db, "employees/" + id);
+                    await update(empRef, { name, email, role, status });
+                    showToast("Employee updated.");
+                } else {
+                    const listRef = ref(db, "employees");
+                    const newRef = push(listRef);
+                    await set(newRef, {
+                        name,
+                        email,
+                        role,
+                        status,
+                        createdAt: Date.now()
+                    });
+                    showToast("Employee added.");
+                }
+                resetForm();
+            } catch (err) {
+                console.error(err);
+                showErrorBanner("Failed to save employee. Please try again.");
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = "Add employee";
+            }
+        });
+
+        employeeTbody.addEventListener("click", async (e) => {
+            const target = e.target;
+            if (!(target instanceof HTMLElement)) return;
+
+            const row = target.closest("tr");
+            if (!row) return;
+
+            const id = row.getAttribute("data-id");
+            if (!id) return;
+
+            const action = target.getAttribute("data-action");
+
+            if (action === "edit") {
+                const cells = row.querySelectorAll("td");
+                const name = cells[0]?.textContent?.trim() || "";
+                const email = cells[1]?.textContent?.trim() || "";
+                const role = cells[2]?.textContent?.trim() || "";
+                const statusText =
+                    row.querySelector(".status-pill")?.textContent?.trim() || "inactive";
+
+                employeeIdInput.value = id;
+                empNameInput.value = name;
+                empEmailInput.value = email;
+                empRoleInput.value = role;
+                empStatusSelect.value =
+                    statusText.toLowerCase() === "active" ? "active" : "inactive";
+
+                saveBtn.textContent = "Save changes";
+                cancelEditBtn.style.display = "inline-block";
+                empNameInput.focus();
+            }
+
+            if (action === "delete") {
+                const confirmDelete = window.confirm(
+                    "Delete this employee? This cannot be undone."
+                );
+                if (!confirmDelete) return;
+
+                try {
+                    const empRef = ref(db, "employees/" + id);
+                    await remove(empRef);
+                    showToast("Employee deleted.");
+                    if (employeeIdInput.value === id) {
+                        resetForm();
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showErrorBanner("Failed to delete employee.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
